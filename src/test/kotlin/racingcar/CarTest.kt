@@ -1,6 +1,6 @@
 package racingcar
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import racingcar.strategy.MovingStrategy
@@ -15,10 +15,10 @@ class CarTest {
         repeat(repetition) {
             car.forward()
         }
-        repeat(repetition) {
-            Assertions.assertThat(car.position[it]).isEqualTo(it)
+        assertThat(0..repetition).allSatisfy {
+            assertThat(car.position[it]).isEqualTo(it)
+            assertThat(car.position.size).isEqualTo(repetition + 1)
         }
-        Assertions.assertThat(car.position.size).isEqualTo(repetition + 1)
     }
 
     @ParameterizedTest
@@ -29,9 +29,9 @@ class CarTest {
             car.wait()
         }
         repeat(repetition) {
-            Assertions.assertThat(car.position[it]).isEqualTo(0)
+            assertThat(car.position[it]).isEqualTo(0)
         }
-        Assertions.assertThat(car.position.size).isEqualTo(repetition + 1)
+        assertThat(car.position.size).isEqualTo(repetition + 1)
     }
 
     @ParameterizedTest
@@ -42,8 +42,8 @@ class CarTest {
             car.run()
         }
         repeat(repetition) {
-            Assertions.assertThat(car.position[it]).isEqualTo(it)
+            assertThat(car.position[it]).isEqualTo(it)
         }
-        Assertions.assertThat(car.position.size).isEqualTo(repetition + 1)
+        assertThat(car.position.size).isEqualTo(repetition + 1)
     }
 }
