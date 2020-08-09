@@ -13,8 +13,7 @@ object StringCalculator {
     }
 
     fun parsing(stringExpression: String?, result: (Pair<List<Int>, List<Operator>>) -> Unit) {
-        if (stringExpression.isNullOrBlank())
-            throw IllegalArgumentException("Null or blank string expression")
+        require(!stringExpression.isNullOrBlank()) { "Null or blank string expression" }
         result(TypeExtractor.extract(stringExpression.replace(" ", "")))
     }
 }
