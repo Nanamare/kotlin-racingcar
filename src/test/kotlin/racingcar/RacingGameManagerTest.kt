@@ -2,24 +2,23 @@ package racingcar
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
 import racingcar.strategy.RandomStrategy
 import racingcar.ui.InputView
 import racingcar.ui.ResultView
 import java.util.function.Consumer
+import java.util.function.Supplier
 
 class RacingGameManagerTest {
 
-    val inputView = mock(InputView::class.java)
+    private val inputView = InputView.Builder()
+        .player(Consumer(::println), Supplier { "3" })
+        .repetition(Consumer(::println), Supplier { "5" })
+        .build()
 
-    val resultView = mock(ResultView::class.java)
+    private val resultView = ResultView()
 
     @Test
     fun `RacingGameManager test`() {
-
-        Mockito.`when`(inputView.numOfCar).thenReturn(3)
-        Mockito.`when`(inputView.numOfRepetition).thenReturn(5)
 
         val racingGameManager = RacingGameManager.builder(inputView, resultView)
             .strategy(RandomStrategy())
@@ -27,7 +26,6 @@ class RacingGameManagerTest {
 
         assertThat(racingGameManager).isNotNull
 
-        // TODO 어떤식으로 테스트 하면 좋을까 고민해보기
         racingGameManager.racing(Consumer { racingGameManager.showRacingResult() })
     }
 }
